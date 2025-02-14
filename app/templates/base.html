@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storyworthy Moments</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="{{ url_for('entry_routes.home') }}" class="nav-link">Home</a>
+        <a href="{{ url_for('entry_routes.add_entry_form') }}" class="nav-link">Add Story</a>
+        <a href="{{ url_for('entry_routes.get_entries') }}" class="nav-link">Stories</a>
+    </nav>
+
+    <!-- Content Block -->
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
