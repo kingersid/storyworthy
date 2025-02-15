@@ -18,7 +18,7 @@ form {
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
+    width: 90%;
     max-width: 400px; /* Limit form width on larger screens */
     margin: 1rem; /* Add margin for better spacing */
 }
@@ -35,7 +35,7 @@ h1 {
 input[type="text"],
 input[type="date"],
 textarea {
-    width: 100%;
+    width: 90%;
     padding: 0.75rem;
     margin-bottom: 1rem;
     border: 1px solid #dddddd;
