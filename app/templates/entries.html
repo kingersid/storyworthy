@@ -1,142 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Storyworthy Moments</title>
-    <style>
-        /* General Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 2rem;
-}
+{% extends "base.html" %}
 
-h1 {
-    font-size: 2rem;
-    color: #333333;
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-/* Entries Container */
-.entries-container {
-    width: 100%;
-    max-width: 800px;
-}
-
-/* Entry Card */
-.entry-card {
-    background-color: #ffffff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1.5rem;
-}
-
-.entry-card h2 {
-    font-size: 1.5rem;
-    color: #007bff;
-    margin-bottom: 0.5rem;
-}
-
-.entry-date {
-    font-size: 0.9rem;
-    color: #777777;
-    margin-bottom: 0.5rem;
-}
-
-.entry-location {
-    font-size: 1rem;
-    color: #555555;
-    margin-bottom: 1rem;
-}
-
-.entry-story {
-    font-size: 1rem;
-    color: #333333;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-}
-.entry-tags {
-    font-size: 0.9rem;
-    color: #555555;
-    margin-bottom: 1rem;
-    margin-top:1rem; /* Add space below tags */
-}
-
-.entry-tags ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    margin-top: 0.25rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem; /* Space between tags */
-}
-
-.entry-tags li {
-    background-color: #f0f0f0;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    color: #333333;
-    white-space: nowrap;
-}
-
-/* Delete Button Styles */
-.delete-form {
-    margin-top: 0.75rem; /* Add more space above the delete button */
-    text-align: left;
-}
-
-.delete-button {
-    background-color: #dc3545; /* Red color for delete */
-    color: #ffffff;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.delete-button:hover {
-    background-color: #c82333; /* Darker red on hover */
-}
-</style>
-
-</head>
-<body>
-    <h1>Storyworthy Moments</h1>
-    <div class="entries-container">
+{% block content %}
+<div class="entries-page">
+    <h1>Your Stories</h1>
+    <div class="entries-grid">
         {% for entry in entries %}
-        <div class="entry-card">
+        <div class="story-card">
+            <span class="delete-x" onclick="document.getElementById('delete-form-{{ entry.id }}').submit();">×</span>
+            <form id="delete-form-{{ entry.id }}" action="{{ url_for('entry_routes.delete_entry', entry_id=entry.id) }}" method="POST" style="display: none;"></form>
             <h2>{{ entry.title }}</h2>
-            <p class="entry-date">{{ entry.date.strftime('%B %d, %Y') }}</p>
-            <p class="entry-location">{{ entry.location }}</p>
-            <p class="entry-story">{{ entry.story }}</p>
-            <div class="entry-tags">
-                {% if entry.tags %}
-                <strong>Tags:</strong>
-                <ul>
-                    {% for tag in entry.tags.split(',') %}
-                    <li>{{ tag.strip() }}</li>
-                    {% endfor %}
-                </ul>
+            <div class="story-meta">
+                <span class="date">{{ entry.date.strftime('%B %d, %Y') }}</span>
+                {% if entry.location %}
+                    <span class="location">📍 {{ entry.location }}</span>
                 {% endif %}
             </div>
-            <!-- Delete Button -->
-            <form action="{{ url_for('entry_routes.delete_entry', entry_id=entry.id) }}" method="POST" class="delete-form">
-                <button type="submit" class="delete-button">Delete</button>
-            </form>
+            <div class="story-content">
+                <p>{{ entry.story }}</p>
+            </div>
+            {% if entry.tags %}
+            <div class="story-tags">
+                {% for tag in entry.tags.split(',') %}
+                    <span class="tag">{{ tag.strip() }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

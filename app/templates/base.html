@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Storyworthy Moments</title>
+    <title>Storyworthy - Your Personal Story Journal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Kalam:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <!-- Navigation Bar -->
     <nav class="navbar">
-        <a href="{{ url_for('entry_routes.home') }}" class="nav-link">Home</a>
-        <a href="{{ url_for('entry_routes.add_entry_form') }}" class="nav-link">Add Story</a>
-        <a href="{{ url_for('entry_routes.get_entries') }}" class="nav-link">Stories</a>
+        <div class="nav-content">
+            <a href="{{ url_for('entry_routes.home') }}" class="nav-brand">Storyworthy</a>
+            <div class="nav-links">
+                <a href="{{ url_for('entry_routes.home') }}" class="nav-link {% if request.endpoint == 'entry_routes.home' %}active{% endif %}">Home</a>
+                <a href="{{ url_for('entry_routes.add_entry_form') }}" class="nav-link {% if request.endpoint == 'entry_routes.add_entry_form' %}active{% endif %}">Add Story</a>
+                <a href="{{ url_for('entry_routes.get_entries') }}" class="nav-link {% if request.endpoint == 'entry_routes.get_entries' %}active{% endif %}">Stories</a>
+            </div>
+        </div>
     </nav>
-
-    <!-- Content Block -->
     <div class="content">
         {% block content %}{% endblock %}
     </div>
